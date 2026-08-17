@@ -1,5 +1,5 @@
-import {test, expect} from '../fixtures/base.fixture';
-import { users } from '../utils/test-data';
+import {test, expect} from '../../fixtures/base.fixture';
+import { users } from '../../utils/test-data';
 
 
 test('login test successful', async ({loginPage, page})=>{
