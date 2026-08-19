@@ -1,4 +1,5 @@
 import {test, expect} from '../../fixtures/base.fixture';
+test.use({storageState: {cookies: [], origins: []}});
 import { users } from '../../utils/test-data';
 
 

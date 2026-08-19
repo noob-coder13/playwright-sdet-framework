@@ -29,7 +29,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'https://www.saucedemo.com',
+    baseURL: process.env.BASE_URL || 'https://www.saucedemo.com',
     testIdAttribute: 'data-test',
 
 
@@ -39,20 +39,49 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+
+    {
+      name: 'setup',
+      testMatch: /.*\.setup\.js/,
+    },
+
+    {
+      name: 'api',
+      testMatch: /tests[\\/]api[\\/].*\.spec\.js/,
+    },
+
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      testMatch: /tests[\\/]ui[\\/].*\.spec\.js/,
+      use:{
+        ...devices['Desktop Chrome'],
+      storageState: 'auth/standard-user.json',
     },
+    dependencies: ['setup'],
+  },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+  {
+    name: 'firefox',
+    testMatch: /tests[\\/]ui[\\/].*\.spec\.js/,
+    use: {
+      ...devices['Desktop Firefox'],
+      storageState: 'auth/standard-user.json',
     },
+    dependencies: ['setup'],
+  },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+  {
+    name: 'webkit',
+    testMatch: /tests[\\/]ui[\\/].*\.spec\.js/,
+    use: {
+      ...devices['Desktop Safari'],
+      storageState: 'auth/standard-user.json',
     },
+    dependencies: ['setup'],
+  },
+],
+      
+    
 
     /* Test against mobile viewports. */
     // {
@@ -73,7 +102,7 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
-  ],
+  
 
   /* Run your local dev server before starting the tests */
   // webServer: {
